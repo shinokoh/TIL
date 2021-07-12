@@ -1,2 +1,0 @@
-*exl filter=lfs diff=lfs merge=lfs -text
-*xlsl filter=lfs diff=lfs merge=lfs -text
