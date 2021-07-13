@@ -1,7 +1,9 @@
-
+library(readxl)
 
 dataset.raw <- read_excel(file.choose())
 str(dataset.raw)
+names(dataset.raw)
+
 # 1. 데이터 전처리
 
 # select와 filter를 통해 아래 컬럼만 뽑고 

@@ -2403,3 +2403,147 @@ ggplot(data = data3) +
 | **outlier.stroke** | outlier.stroke=숫자K                     | outlier 점의 테두리 두께 지정                              |
 | **outlier.alpha**  | outlier.alpha=숫자K                      | outlier 점의 투명도 지정. (0~1 사이)                       |
 
+
+
+
+
+### DAY11
+
+#### 01. 정형 데이터 처리
+
+1. 패키지 설치
+
+```R
+install.packages('rJava')
+install.packages('DBI')
+install.packages('RJDBC')
+
+Sys.setenv(JAVA_HOME='C:\\Program Files\\Java\\jdk1.8.0_121')
+
+library(rJava)
+library(DBI)
+library(RJDBC)
+```
+
+
+
+2. 데이터베이스 연동
+
+1) driver loading 
+
+```r
+driver <- JDBC(driverClass = 'oracle.jdbc.driver.OracleDriver',
+               classPath   = 'C:\\oraclexe\\app\\oracle\\product\\11.2.0\\server\\jdbc\\lib\\ojdbc6.jar')
+
+```
+
+2) connection(오라클 연동)
+
+```r
+conn <- dbConnect(driver , 
+                  'jdbc:oracle:thin:@localhost:1521:xe' , 
+                  'hr' , 
+                  'hr')
+
+select.sql <- 'select * from employee'
+```
+
+
+
+3.  쿼리수행
+
+```r
+# dbGetQuery() : select 
+
+emp.tbl <- dbGetQuery(conn , select.sql)
+str(emp.tbl)
+
+> str(emp.tbl)
+'data.frame':	22 obs. of  13 variables:
+ $ EMP_ID   : chr  "100" "101" "102" "103" ...
+ $ EMP_NAME : chr  "한선기" "강중훈" "최만식" "정도연" ...
+ $ EMP_NO   : chr  "621133-1483658" "621136-1006405" "861011-1940062" "631127-2519077" ...
+ $ EMAIL    : chr  "sg_ahn@vcc.com" "jh_park@vcc.com" "ms_choi@vcc.com" "sy_kang@vcc.com" ...
+```
+
+```r
+# dbSendUpdate() : DML(insert, update , delete) , DDL(create , drop , alter)
+
+create.tbl <- 'create table r_tbl(
+  id  varchar2(20) primary key , 
+  pwd varchar2(20) not null,
+  username varchar2(50) not null , 
+  upoint   number       default 100
+)'
+
+dbSendUpdate(conn , create.tbl)
+```
+
+```r
+# insert
+insert.sql <- "insert into r_tbl values('jslim',  'jslim' , '섭섭이' , default)" 
+dbSendUpdate(conn , insert.sql)
+
+r.tbl <- dbGetQuery(conn , 'select * from r_tbl')
+str(r.tbl)
+
+
+emp.tbl <- dbGetQuery(conn , 'select * from tabs')
+str(emp.tbl)
+emp.tbl$TABLE_NAME
+
+update.sql <- "update r_tbl
+               set username = 'admin'
+               where id = 'jslim' " 
+```
+
+```r
+# update
+dbSendUpdate(conn , update.sql)
+r.tbl <- dbGetQuery(conn , 'select * from r_tbl')
+str(r.tbl)
+
+# delete
+dbSendUpdate(conn , "delete from r_tbl where id = 'jslim' ")
+r.tbl <- dbGetQuery(conn , 'select * from r_tbl')
+str(r.tbl)
+
+select.sql <- 'select * from employee'
+
+emp.tbl <- dbGetQuery(conn , select.sql)
+str(emp.tbl)
+```
+
+```r
+# 파생변수로 gender 추가
+
+emp.tbl$gender <- ifelse(str_sub(emp.tbl$EMP_NO , 8 , 8) == 1 | str_sub(emp.tbl$EMP_NO , 8 , 8) == 3 , 'M', 'F')
+
+```
+
+```R
+# 성별에 따른 급여 평균 구한다면?
+library(dplyr)
+emp.tbl %>% 
+  group_by(gender) %>%
+  dplyr::summarise(mean.sal = mean(SALARY))
+  
+    gender mean.sal
+  <chr>     <dbl>
+1 F      2257500 
+2 M      3364286.
+
+# 시각화
+# bar()
+
+library(ggplot2)
+ggplot(genderGroupMean , 
+       aes(x = Group.1 , y = x , fill = Group.1)) +
+  geom_bar(stat = 'identity')
+
+```
+
+
+
+#### 02.비정형데이터 처리
+
