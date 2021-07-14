@@ -1,5 +1,11 @@
 
 
+
+
+
+
+
+
 # R basic
 
 ## DAY01
@@ -2546,4 +2552,116 @@ ggplot(genderGroupMean ,
 
 
 #### 02.비정형데이터 처리
+
+1. 데이터 불러오기
+
+```R
+# 데이터 불러오기
+
+dataset <- file(file.choose(), encoding = 'UTF-8')
+dataset.read <- readLines(dataset)
+
+str(dataset.read)
+head(dataset.read)
+
+class(dataset.read)
+dataset.read[74]
+```
+
+
+
+2. 데이터 전처리
+
+```r
+# 문장부호 제거 [[:punct:]] 하는 정규표현식을 활용한다면?
+# 특수문자 제거 [[:cntrl:]]
+# 숫자 제거 [0-9] \\d+ 
+# \\w+ , \\s+ , \n , \t
+
+s <- gsub('[[:punct:]]' , '' , fbook_read)
+s <- gsub('[[:cntrl:]]' , '' , s)
+s <- gsub('\\d+' , '' , s)
+s <- tolower(s)
+s[1]
+
+>[1] "스마트 기기와 sns 덕분에 과거 어느 때보다 많은 데이터가 흘러 다니고 빠르게 쌓입니다 다음 그림은 년에 인터넷에서 초 동안 얼마나 많은 일이 벌어지는지를 나타낸 그림이다 facebook에서는 초마다 글이 만 천 건 포스팅되고 좋아요 클릭이 만 건 발생합니다 데이터는 gb씩 쌓입니다 이런 데이터를 실시간으로 분석하면 사용자의 패턴을 파악하거나 의사를 결정하는 데 참고하는 등 다양하게 사용할 수 있을 것입니다 "
+
+```
+
+
+
+3) 단어사전 가져오기
+
+```R
+# 단어사전 가져오기 
+
+# service_data_pos_pol_word.txt
+head(fbook_read,1)
+wordList <- str_split(s, "\\s+") 
+wordVec <- unlist(wordList)
+
+# service_data_neg_pol_word.txt
+negativeDic <- file(file.choose(), encoding="UTF-8")
+nDic <- readLines(negativeDic)
+head(nDic)
+str(nDic)
+
+pDic <- c(pDic, "긍정의 씨앗")
+str(pDic)
+nDic <- c(nDic, "부정의 씨앗")
+str(nDic)
+```
+
+
+
+4) 분석을 위한 함수 정의 
+
+```R
+#  분석된 단어(wordVec) VS 사전 단어(pDic, nDic)에 매치가 되는지를 검사
+#  match()
+
+pMatch <- match(wordVec, pDic)
+nMatch <- match(wordVec, nDic)
+
+# 사전에 등록된 단어 추출을 한다면?
+pMatch <- !is.na(pMatch)
+nMatch <- !is.na(nMatch)
+
+scores <- sum(pMatch) - sum(nMatch)
+
+    score = sum(pMatch) - sum(nMatch) 
+    return(score)
+  }, positive, negative)
+  
+  scores.df = data.frame(score=scores , text=words)
+  return(scores.df)
+}
+
+
+resultTbl <- resultS(wordVec, pDic, nDic) 
+
+str(resultTbl)
+resultTbl
+resultTbl$text
+resultTbl$score
+resultTbl$remark[resultTbl$score >= 1 ] <- "긍정"
+resultTbl$remark[resultTbl$score == 0 ] <- "중립"
+resultTbl$remark[resultTbl$score <  0 ] <- "부정"
+
+pieResult <- table(resultTbl$remark)
+
+긍정 부정 중립 
+  45   16 2440 
+```
+
+
+
+5) 시각화
+
+```R
+pie(pieResult, 
+    labels = names(pieResult),
+    col = c('yellow', 'green', 'blue'),
+    radius = 1.0)
+```
 

@@ -6,7 +6,7 @@ install.packages('rJava')
 install.packages('DBI')
 install.packages('RJDBC')
 
-Sys.setenv(JAVA_HOME='C:\\Program Files\\Java\\jdk1.8.0_121')
+Sys.setenv(JAVA_HOME='C:\\Program Files\\Java\\jdk1.8.0_151')
 
 library(rJava)
 library(DBI)
