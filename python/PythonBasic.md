@@ -1078,11 +1078,409 @@ v1 is 9
 
 ```
 
+```python
+score = []
+for i in range(5) : # 5번 반복
+	score.append(int(input('숫자입력: ')))
+>
+숫자입력:1
+숫자입력:2
+숫자입력:3
+숫자입력:4
+숫자입력:5
 
+for element in score :
+	print(element)
+> 
+1
+2
+3
+4
+5
+
+# 위 결과값을 가로로 출력하시오
+
+for i in range(len(score)):
+    print(score[i], end = '\t')
+> 1	2	3	4	5
+
+# score 입력값의 총합 출력
+# score 입력값의 평균 출력
+sum = 0 
+avg = 0
+for i in range(len(score)) :
+    sum += score[i]
+    avg = sum/len(score)
+print('총합은', sum)
+print('평균은', avg)
+> 총합은 15
+> 평균은 3.0
+```
+
+2. while 반복문
+
+```python
+dogNames = []
+isFlag = True
+
+while isFlag : # True 이면 아래 코드를 반복실행해라
+    name = input("what is your dog's name?")
+    if name == "" : # 강쥐이름이 없다면
+        isFlag = False # False 값을 반환 -> 반복중단
+        break # 빠져나오셈
+    else :
+        dogNames.append(name) # 강쥐이름을 입력한다면 dogNames 리스트에 반복해서 추가하삼
+print('강쥐들의 이름은?', dogNames)
+
+>
+what is your dog's name?몽몽이
+what is your dog's name?몽순이
+what is your dog's name?댕댕이
+what is your dog's name?      #공란입력 --> break
+강쥐들의 이름은? ['몽몽이', '몽순이', '댕댕이']
+```
+
+- while문을 이용한 guess game(활용예제)
+
+```python
+from random import randint # 난수 생성 모듈
+answer = randint(1, 101) # 1~100 숫자 중 난수생성
+print('정답: ', answer)
+tries = 1 # 시도횟수 지정
+
+Q. 기회는 10번!, guess 게임을 만들어보자 
+
+while tries >= 10 : # 기회는 10번
+    guess = int(input("정답을 맞춰보시오 : "))
+    if guess == answer :
+        print("정답입니다")
+        break 
+    elif guess >= answer :
+        print("down")
+    else :
+        print("up")
+    tries += 1 # tries = tries + 1
+ 
+> 
+정답:  46
+정답을 맞춰보시오: 1
+up
+정답을 맞춰보시오: 2
+up
+정답을 맞춰보시오: 50
+down
+정답을 맞춰보시오: 46
+정답입니다
+
+Process finished with exit code 0
+
+print('정답: {} & 시도횟수 : {}'.format(answer, tries))
+> 정답: 46 & 시도횟수 : 4
+
+```
+
+1) 활용예제(한줄에 n 개씩 결과값을 출력하시오)
+
+- 올림픽은 4년에 한번 개최된다. 2000 - 2050 년 사이의 올림픽 개최년도를 출력하고, 한줄에 5개 년도씩 출력하시오
+
+```python
+for year in range(2000, 2051, 4)
+	print (year)
+>
+2000
+2004
+2008
+2012
+2016
+2020
+2024
+2028
+2032
+2036
+2040
+2044
+2048
+
+# 가로로 5개씩 어떻게 출력?
+cnt = 0 # 실행 횟수를 count를 함
+for year in range(2000, 2051, 4) :
+    cnt += 1 
+    if cnt%5 == 0 : # 실행 횟수가 5번째가 되면 
+        print(year, end = '\n')  # 다음 줄에 출력
+    else :
+        print(year, end = '\t') # 아니면 가로로 출력
+
+>
+2000	2004	2008	2012	2016
+2020	2024	2028	2032	2036
+2040	2044	2048	
+```
+
+2) 활용예제2(조건에 맞는 값만 출력)
+
+```python
+tmpList = ['I' , 'AM' , 'study' , 'PYTHON' , 'language' , '!']
+
+# 위 리스트에서 세 글자 이상 문자만 출력하시오
+
+for x in tmpList :
+    if len(x) >= 3 :
+        print(x)
+>
+study
+PYTHON
+language
+
+# 위 리스트에서 대문자인 문자들만 출력하시오
+for x in tmpList :
+    if x.isupper() : 
+        print(x)
+> 
+I
+AM
+PYTHON
+
+# 확장자를 제외하고 파일이름만 출력
+tmpList = ['greeting.py' , 'ex01.py' , 'intro.hwp' , 'bigdata.doc']
+
+for i in range(len(tmpList)) :
+    print(tmpList[i].split('.')[0])
+>
+greeting
+ex01
+intro
+bigdata
+```
+
+
+
+3. 이중 반복구문(루프구문)
+
+```python
+# 구구단 만들기
+
+cnt = 1
+for i in range(2, 10) :
+    for j in range(2, 10):
+        cnt += 1
+        if cnt%8 == 0 :
+            print('{}*{} = {}'.format(i, j, i*j), end = '\n')
+        else :
+            print('{}*{} = {}'.format(i, j, i * j), end='\t')
+> 
+2*2 = 4	2*3 = 6	2*4 = 8	2*5 = 10	2*6 = 12	2*7 = 14	2*8 = 16
+2*9 = 18	3*2 = 6	3*3 = 9	3*4 = 12	3*5 = 15	3*6 = 18	3*7 = 21	3*8 = 24
+3*9 = 27	4*2 = 8	4*3 = 12	4*4 = 16	4*5 = 20	4*6 = 24	4*7 = 28	4*8 = 32
+4*9 = 36	5*2 = 10	5*3 = 15	5*4 = 20	5*5 = 25	5*6 = 30	5*7 = 35	5*8 = 40
+5*9 = 45	6*2 = 12	6*3 = 18	6*4 = 24	6*5 = 30	6*6 = 36	6*7 = 42	6*8 = 48
+6*9 = 54	7*2 = 14	7*3 = 21	7*4 = 28	7*5 = 35	7*6 = 42	7*7 = 49	7*8 = 56
+7*9 = 63	8*2 = 16	8*3 = 24	8*4 = 32	8*5 = 40	8*6 = 48	8*7 = 56	8*8 = 64
+8*9 = 72	9*2 = 18	9*3 = 27	9*4 = 36	9*5 = 45	9*6 = 54	9*7 = 63	9*8 = 72
+9*9 = 81	
+Process finished with exit code 0
+
+```
 
 
 
 # DAY 04
 
 ## 01. 사용자 정의 함수
+
+1. 사용자 정의 함수 
+
+- 말그대로 사용자가 직접 만들어 사용하는 함수 
+
+```python
+# 함수 정의 기본구조
+
+def 함수명(매개변수) : 
+	수행할 코드1 
+	...
+	[return 반환값]
+
+# def 함수이름(option) :
+#   statement
+#   return value
+
+# 함수 생성
+def printGreeting() :
+    print('hello python')
+
+# 함수 호출 
+printGreeting()
+> hello python
+
+# 함수 생성2 
+def mySum(x, y, z=10)
+	return x + y + z
+
+# 함수 호출
+print(mySum(5,7))
+> 22
+```
+
+- 매개변수란? 함수에 입력으로 전달된 값을 받는 변수
+- 인자 또는 인수란? 함수 호출시 설정된 함수로 넘겨지는 값들
+
+1) 활용예제
+
+- list 속 숫자의 총합을 구하는 함수를 만들어 보자
+
+```python
+# 기본원리
+data = [1, 3, 5, 7, 9]
+tot = 0
+for i in data :
+    tot += i
+print('총합은?', tot)
+> 총합은? 25
+```
+
+```python
+# 함수생성
+
+def totalCalc(data) : # 총합을 구하는 함수 정의
+    total = 0
+    for i in data :
+        total += i
+    return total
+totalCalc(data)
+> 총합은? 25
+```
+
+2) 활용예제
+
+- 짝수만 골라 리스트를 생성하는 함수를 만들어 보자
+
+```python
+myList = [3, 4, 10, 23, 34, 3, 6]
+
+def pickEven(numlist) :
+    result = []
+    for num in numlist :
+        if num%2 == 0 :
+            result.append(num)
+    return result
+
+result = pickEven(myList)
+print('result - ' , result )
+> result -  [4, 10, 34, 6]
+
+```
+
+
+
+# DAY 05
+
+## 01. 클래스(class) & 인스턴스
+
+1. 클래스: 일종의 부류 (ex.과일)
+2. 인스턴스: class에 포함되는 일종의 실체 (ex. 눈앞에 있는 사과)
+
+```python
+class 클래스이름 :
+	변수 #선언하는 위치에 따라 소유의 주체가 달라짐(클래스or인스턴스)
+	생성자 
+	함수 #클래스 내부에 정의된 함수를 매서드라고 함 
+```
+
+- 클래스 생성
+
+```python
+# class 
+
+class Person :
+    
+    # 클래스 소유의 변수
+    # 모든 인스턴스가 공유하는 변수
+    cls_val = 3.5
+    
+    # magic Function
+    # 인스턴스 소유의 변수
+    def __init__(self, name, age, gender) :
+        self.name = name
+        self.age = age
+        self.gender = gender
+    # 인스턴스 소유의 함수
+    def doing(self) :
+        print('일하고 있습니다')
+    
+    def perInfo(self) :
+        return '이름 {}, 나이 {}, 성별{}'.format(self.name, self.age, self.gender)
+    
+    def printClsVar(self) :
+        print('cls_var value: ',person.cls_var)
+```
+
+- 인스턴스 생성
+
+```python
+# 인스턴스 생성
+PerName = '홍길동'
+PerAge = 23
+PerGender = 'M'
+
+def doing():
+    print('{} 는 나이가 {} 살이고 성별은 {} 이다'.format(PerName, PerAge, PerGender))
+doing()
+
+>홍길동 는 나이가 23 살이고 성별은 M 이다
+
+
+perObj01 = Person('홍길동', 49, 'M')
+perObj01.doing()
+print(perObj01.name)
+print(perObj01.age)
+>
+일하고 있습니다
+홍길동
+49
+```
+
+- 클래스 생성
+
+```python
+class Employee :
+    # 클래스 소유 변수
+    raise_rate = 1.1
+
+    # 인스턴스 소유 변수
+    def __init__(self, userName , userSalary):
+        self.userName = userName
+        self.userSalary = userSalary
+
+    # 인스턴스 함수
+    def incrementSalary(self): 
+        self.userSalary = self.userSalary * Employee.raise_rate
+    
+    def getSalary(self):
+        return '{} 님의 급여는 {} 입니다'.format(self.userName, self.userSalary)
+    
+    @classmethod # 클래스 소유 함수 
+    def changeRate(cls, ratio):
+        cls.raise_rate = ratio
+        print('인상률 {} 가 적용 되었습니다'.format(ratio))
+```
+
+- 인스턴스
+
+```python
+empObj01 = Employee('홍길동', 1000)
+print(empObj01.getSalary())
+> 홍길동 님의 급여는 1000 입니다
+
+# 급여인상
+empObj01.incrementSalary() # 급여 인상 계산 실행
+print(empObj01.getSalary()) # 인상된 결과값 출력
+> 홍길동 님의 급여는 1100.0 입니다
+
+# 인상률 변경
+Employee.changeRate(1.5) # 인상률 변경 실행
+empObj01.incrementSalary() # 변경된 인상률로 계산 실행
+print(empObj01.getSalary()) # 인상 결과값 출력
+> 
+인상률 1.5 가 적용 되었습니다.
+홍길동 님의 급여는 1650.0 입니다
+```
 
