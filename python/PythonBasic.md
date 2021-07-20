@@ -753,3 +753,336 @@ print(tmpDict)
 > {}
 ```
 
+
+
+## 05 .Boolean 
+
+- 참(True), 거짓(False) 두 개의 값을 가지는 자료형
+- True는 1로, False는 0으로 표현
+- 논리연산자(not, and, or)
+- 비교연산자(&, | , ~)
+- " " , [] , () , {}, 0 , None -> false
+
+```python
+a = 5
+b = 0
+
+print('booltype = ', bool(-1))
+> booltype =  True
+
+print('bitwise - ', bool((a&b)))
+> bitwise -  False
+
+print('bitwise - ', bool((a|b)))
+> bitwise -  True
+
+
+tmpList = []
+tmpstr = ""
+print(bool(tmpList), bool(tmpstr) , bool((1,2,3)))
+> False False True
+
+trueFlag  = True
+falseFlag  = False
+
+print('True - False', int(trueFlag), int(False))
+> True - False 1 0
+
+print('and - &', trueFlag and falseFlag , trueFlag&falseFlag) #하나만 false여도 false
+> and - & False False
+
+print('or - |', trueFlag or falseFlag, trueFlag|falseFlag) #하나만 True여도 True
+> or - | True True
+
+print('not', not trueFlag)
+> not False
+```
+
+
+
+
+
+# DAY 03
+
+
+
+## 01. 날짜 및 시간(datetime)
+
+1. datetime 모듈
+
+```python
+# from 패키지명.모듈 import 함수명
+# from 모듈 import 함수명 또는 클래스
+# import 모듈명
+
+from datetime import date, datetime
+print('type - ', type(date))
+> type -  <class 'type'>
+```
+
+- date 함수 : 년/월/일 표시
+
+```python
+today = date.today()
+print('오늘의 날짜: ', today)
+> 오늘의 날짜:  2021-07-19
+
+print('오늘의 년/월/일: ', today.year, today.month, today.day)
+> 오늘의 년/월/일:  2021 7 19
+```
+
+- datetime 함수 : 시/분/초 까지 표시
+
+```python
+usertime = datetime.today()
+print(usertime)
+> 07-19 16:57:34.273748
+
+print('시간만 출력해봐요', usertime.hour , usertime.minute, usertime.minute)
+> 시간만 출력해봐요 16 57 57
+```
+
+
+
+2. 시간연산
+
+- print('오늘날짜에서 하루를 더해봐요', today + 1) <- 에러발생
+
+```python
+from datetime import date, datetime, timedelta
+from dateutil.relativedelta import relativedelta
+
+# timedelta 함수(day 연산)
+today = date.today()
+days = timedelta(days = -1)
+print('하루 전 날짜를 출력해봐요:', today + days)
+> 하루 전 날짜를 출력해봐요: 2021-07-18
+
+# 이틀 후 날짜를 출력해봐요
+days = timedelta(days = +2)
+print(today + days)
+> 2021-07-21
+
+#relativedelta 함수(months, years 연산)
+# 두달 전 날짜를 출력해봐요
+months = relativedelta(months= -2)
+print(today + months)
+> 2021-05-19
+
+# 2년 후 날짜를 출력해봐요
+years = relativedelta(years= +2)
+print(today + years)
+> 2023-07-19
+```
+
+
+
+3. 특정날짜객체 생성
+
+```python
+# parse 함수 활용
+from dateutil.parser import parse
+userDate = parse('2019-7-16')
+print(userDate , type(userDate))
+> 2019-07-16 00:00:00 <class 'datetime.datetime'>
+```
+
+4. 날짜 형변환
+
+1) 날짜를 문자형태로 변환
+
+```python
+# 날짜 -> 문자: strftime 함수 사용
+
+print("날짜를 문자형태로 변환하세요: ", userDate.strftime('%m-%d-%y'
+))
+날짜를 문자형태로 변환하세요:  07-16-19
+```
+
+2) 문자를 날짜형태로 변환
+
+```python
+# 문자 -> 날짜: strptime 함수 사용
+
+print("날짜를 문자형태로 변환하세요: ", userDate.strftime('%m-%d-%y'
+), type(userDate.strftime('%m-%d-%y'
+)))
+
+> 날짜를 문자형태로 변환하세요:  07-16-19 <class 'str'>
+
+str = '19, 7, 6, 10:29:12'
+print("문자를 날짜형태로 변환하세요 : ", datetime.strptime(str, '%y, %m, %d, %H:%M:%S'), type(datetime.strptime(str, '%y, %m, %d, %H:%M:%S')))
+
+> 문자를 날짜형태로 변환하세요 :  2019-07-06 10:29:12 <class 'datetime.datetime'>
+```
+
+
+
+
+
+## 02. 제어문(if)
+
+- if 조건문은 특정 조건일 때 코드를 실행하는 문법
+
+1) if / if~else / elif
+
+```python
+# if 사용하기 
+if 조건식 :
+   코드1 #들여쓰기(ident)
+
+tmpList = [1]
+if tmpList : 
+    print('pass')
+    
+# if~else 사용하기
+if 조건식 :
+   코드1 #들여쓰기(ident)
+else :
+    코드2
+
+score = int( input('점수를 입력하세요 : ') )
+if score >= 60 :
+    print('pass')
+else :
+    print('non pass')
+
+> 
+점수를 입력하세요 : 50
+non pass
+
+Q1. 윤년 판별
+윤년? 4의 배수이고(year%4 == 0) 100의 배수가 아니거나(year%100 != 0) 400의 배수일때(year%400 == 0)
+
+year = int(input('년도를 입력하시오: '))
+if (year%4 == 0 and year%100 != 0) or (year%400 == 0) :
+    print('윤년입니다')
+else :
+    print('평년입니다')
+
+> 년도를 입력하시오: 2020
+윤년입니다
+
+#elif 사용하기
+
+Q2. 해당년도가 윤년일 경우 2월달의 마지막일은 29, 평년일 경우 2월달의 마지막일은 28일/출력 형식은 'yyyy년 m월 마지막일은 dd일 입니다'로 출력
+
+A1. 
+year = int(input("년도를 입력하세요:"))
+month = int(input("달을 입력하세요:"))
+year_day = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
+leap_year_day = [31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
+
+if(year%4 == 0 and year%100 != 0)  :
+    print('{}년 {}월 마지막일은 {}일 입니다'.format(year, month, leap_year_day[month - 1]))
+elif (year%400 == 0) :
+    print(print('{}년 {}월 마지막일은 {}일 입니다'.format(year, month, leap_year_day[month - 1])))
+else :
+    print('{}년 {}월 마지막일은 {}일 입니다'.format(year, month, year_day[month - 1]))
+    
+> 년도를 입력하세요: 2020
+달을 입력하세요:2
+2020년 2월 마지막일은 29일 입니다
+
+A2.
+if month == 2 :
+    if (year % 4 == 0 and year % 100 != 0) or (year % 400 == 0) :
+        lastday = 29
+        print('{}년 {}월 마지막일은 {}일 입니다'.format(year, month, lastday))
+    else :
+        lastday = 28
+        print('{}년 {}월 마지막일은 {}일 입니다'.format(year, month, lastday))
+> 년도를 입력하세요: 2020
+달을 입력하세요:2
+2020년 2월 마지막일은 29일 입니다
+
+# if~in 구문 활용하기
+
+list31 = [1,3,4,5,7,8,10,12]
+if month != 2:
+    if month in list31 :
+        print('{}년 {}월 마지막일은 31일 입니다'.format(year, month))
+    else :
+        print('{}년 {}월 마지막일은 30일 입니다'.format(year, month))
+else :
+    if (year%4==0 and year%100 !=0) or year%400 ==0:
+        print("{}년 {}의 마지막 달은 27일 입니다".format(year, month))
+    else:
+        print("{}년 {}의 마지막 달은 28일 입니다".format(year, month))
+
+> 년도를 입력하세요:2020
+달을 입력하세요:7
+2020년 7월 마지막일은 31일 입니다
+```
+
+
+
+2) 중첩 조건문
+
+```python
+grade = 'A'
+avg = 91
+
+if grade == 'A' :
+    if avg >= 95 :
+        print('장학금 100%')
+    elif avg >= 90 :
+        print('장학금 90%')
+
+> 장학금 90%
+```
+
+
+
+3) 3항연산자
+
+- 형식: 변수명 = 참일 경우 실행코드 if 조건식 else 거짓일 경우 실행코드
+
+```python
+num = 9
+if num >= 5 :
+    result = num * 2
+else :
+     result = num + 2
+     
+result = num * 2 if num >= 5 else num + 2
+print('result - ', result)
+> result -  18
+```
+
+
+
+## 03. 반복문(for/while)
+
+1. for 와 range
+
+```python
+# 기본구문
+for 변수 in range (횟수) :
+	반복할 코드
+    
+
+for v1 in range(10) :
+    print('v1 is' , v1)
+>
+v1 is 0
+v1 is 1
+v1 is 2
+v1 is 3
+v1 is 4
+v1 is 5
+v1 is 6
+v1 is 7
+v1 is 8
+v1 is 9
+
+```
+
+
+
+
+
+# DAY 04
+
+## 01. 사용자 정의 함수
+
