@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script  src="http://code.jquery.com/jquery-latest.min.js"></script>
+
+</head>
+<body>
+    hello script
+    <hr/>
+    <div id = 'msg'>
+        그냥 메세지 입니다.
+    </div>
+    <!--form으로 묶여있지 않으니 클릭해도 실행이 안되나
+        스크립트 영역에서 실행되도록 정의할 수 있다.-->>
+    <button id = "btn">click</button>
+    <hr/>
+    <fieldset>     <!-- fieldset 해당 영역을 박스로 감싸기-->
+        <legend>개인정보</legend><!--박스의(영역)이름 설정-->
+        <!--
+            <label for = "fname" disabled> 는 비활성화
+            <label for = "fname" readonly> 는 비활성화는 아니지만 읽기전용
+        -->
+        <label for = "fname">First Name : </label><br/>
+        <!-- input하면  name 안에 변수(fname , lname)에 담긴다. required 꼭 채워져야하는구간-->
+        <input type='text' name="fname" id = 'fname' class = 'fname'><br/>
+        <label for = "lname">Last Name : </label><br/>
+        <input type='text' name="lname" id = 'lname' class = 'lname'><p/>
+        <button id = "openBtn" >open</button> 
+        <button id = "closeBtn">close</button>
+        <button id = 'getBtn'>get</button>
+    </fieldset>
+    <hr/>
+    <div id = 'result'></div>
+    <button id = 'resultBtn'>click</button>
+    <hr/>
+
+    <fieldset>     <!-- fieldset 해당 영역을 박스로 감싸기-->
+        <legend>비동기 통신(AJAX)</legend><!--박스의(영역)이름 설정-->
+        <select id = "maker">
+            <option>선택하세요</option>
+            <option value = 'bmw'>BMW</option>
+            <option value = 'audi'>AUDI</option>
+            <option value = 'benz'>benz</option>
+        </select>
+        <select id = 'model'>
+            <option>선택하세요</option>
+        </select><br/>
+
+        <input type='text' name="id" id = 'id'>
+        <button id = "ajaxBtn">아이디 중복체크</button>
+        <!--맨위 js jquery 함수에 중복체크하는게 이미 담겨있다. 활용하면 된다.-->
+        <div id = "idChk"></div>
+    </fieldset>
+
+    <script> /*바디 마지막부분에 써서 페이지가 로드되고 스크립트 실행하는게 좋다*/
+       
+        name = 'name'
+        obj = {id : 'id', pwd : 'pwdd'}
+        list = [
+            {id : 'id01', pwd : 'pwdd01'},
+            {id : 'id02', pwd : 'pwdd02'}
+        ]
+
+        bmwAry = ['320d' , '520d' , '640d' , '750ld']
+        audiAry = ['a4' , 'a6' , 'a8' , 'rs8']
+        benzAry = ['c200' , 'e300' , 's500' , 's580']
+        function display(ary){
+            txt = '<option>선택하세요</option>'
+            $.each(ary , function(idx , data){
+                txt += '<option>'+ data +'</option>'
+            })
+            $('#model').html(txt)
+            //$('#model').empty().append(txt)
+        }
+
+        /*$ 는 jquery 를 쓰겠다는 의미 위의 id 를 사용할 수 있다.*/
+        $(document).ready(function(){
+
+            // maker 라는 id를 가진 태그에 접근 해서 change 하는 함수 이다
+            // maker 라는 id를 가진 태그에서 그 값들을 가져온다. (bmw , audi , benz)
+            // 그 maker 값들을 하나씩 비교해 원하는 브랜드라면 위에 정의해 높은 브랜드 모델명을 display 함수로 넘기고 (위쪽).
+            // model 이란 태그를 가진 곳에 저 txt 들을 (해당브랜드 모델명들) html 로 추가돼서 보여진다.
+            $('#maker').change(function(){
+                //alert($('maker').val())
+                maker = $('#maker').val()
+                if(maker == 'bmw'){
+                    display(bmwAry)
+                }
+                else if (maker == 'audi'){
+                    display(audiAry)
+                }else if (maker == 'benz'){
+                    display(benzAry)
+                }
+                else{
+                    txt = '<option>선택하세요</option>'
+                }
+            })
+
+            /*id가 msg인 tag 를 찾겠다. 찾아서 text 의 내용 출력 */
+            $('#msg').text('스크립트를 이용한 텍스트 추가')
+
+            $('#btn').click(function(){
+                $('#msg').text('변경')
+                /*alert('btn click')*/
+            })
+
+            $('#openBtn').click(function(){
+                $('#fname').prop("disabled" , false)
+                $('#lname').prop("disabled" , false)
+            })
+
+            $('#closeBtn').click(function(){
+                /*
+                .prop() 속성을 다루는
+                # 은 id 접근 ('#fname')
+                . 은 class 접근 $('.lname')
+                속성 disabled 가 활성화를 해야하니 true
+                */
+                $('#fname').prop("disabled" , true)
+                $('#lname').prop("disabled" , true)
+            })
+
+            $('#getBtn').click(function(){
+                fname = $('.fname').val()
+                lname = $('.lname').val()
+                alert(fname + " , " + lname)
+            })
+
+            $('#resultBtn').click(function(){
+                //{# text()  , html()  , val() append() #}
+                //$('#result').text(name)
+                //$('#result').html('<h1>'+name+'<h1>')
+                //$('#result').text(obj.id + " , " + obj.pwd)  
+                // 반복문 형태   
+                $.each(list , function(idx , data){
+                    // text 는 덮어쓰기 때문에 append로 출력을 추가해 나가는게 좋다.
+                    //$('#result').text(idx + "," +obj.id + " , " + obj.pwd)
+                    $('#result').append(idx + "," +data.id + " , " + data.pwd + '<br/>')
+                })
+            })
+
+            $('#ajaxBtn').click(function(){
+                //alert()
+                //jquery 가 제공하는 함수중에 ajax() 라고 있다.
+                // data : csrf 보안값이 넘어가줘야 한다. 서버와의 통신은 아니지만 그렇다면
+                $.ajax({
+                    // request url 이 된다.
+                    type: 'post',
+                    url: "../idChkAjax/" , //
+                    data : { 'csrfmiddlewaretoken' : '{{csrf_token}}' , 
+                                            id : $('#id').val() },
+                    dataType : 'json',
+                    success : function(list) {
+                        $('#idChk').text(list[0].msg)
+                        alert(list[0].msg)
+                    }
+                })
+            })
+
+        })
+    </script>
+
+
+    <!-- <script>
+        /* 아래처럼 쓰면 호환성 문제도 있으니 head에 .js 정의 하고 가져오겠다.가 위 script*/
+        element = document.getElementById('msg') /*id 가 msg 인것을 찾는다.*/
+        alert(element)
+    </script> -->
+
+</body>
+</html>

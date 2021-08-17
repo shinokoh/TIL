@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+{%load static%}
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/modules/wordcloud.js"></script>
+    <script src="https://code.highcharts.com/modules/exporting.js"></script>
+    <script src="https://code.highcharts.com/modules/export-data.js"></script>
+    <script src="https://code.highcharts.com/modules/accessibility.js"></script>
+    <link rel='stylesheet' href="{% static 'char/css/wordcloud.css' %}">
+</head>
+<body>
+    wordcloud in
+
+    <figure class="highcharts-figure">
+    <div id="container"></div>
+    <p class="highcharts-description">
+        Word clouds are used to visualize how often each word in a
+        text occurs. This example uses an excerpt from the popular
+        "Lorem Ipsum" text. Words that appear often will appear
+        larger.
+    </p>
+    </figure>
+
+    <script src="{% static 'chart/js/wordcloud.js' %}"></script>
+
+</body>
+</html>

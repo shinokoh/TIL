@@ -1,0 +1,39 @@
+.responsive{  /*class 가 responsive 에 float left 를 적용*/
+    padding : 6px;
+    float : left;
+    width : 25%;
+}
+
+div.desc{ /*div 중 class 가 desc 인 애들*/
+    padding: 15px;
+    text-align: center;
+}
+
+div.gallery:hover{/*갤러리 클래스에 마우스가 올라갔을때*/
+    border: 1px solid red;
+
+}
+
+div.gallery img{
+    width : 100%;
+    height: auto;
+}
+
+*{ /*전체를 의미*/
+    box-sizing: border-box;
+}
+
+div.gallery{
+    border:1px solid black;
+}
+
+/*해상도에 따라 보여줄 영역이 달라진다.*/
+@media only screen and (max-width : 700px){
+
+}
+
+@media only screen and (max-width : 500px){
+    .responsive{
+        width: 100%;
+    }
+}

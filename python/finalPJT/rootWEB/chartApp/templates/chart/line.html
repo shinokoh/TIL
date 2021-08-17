@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+{%load static%}
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/modules/series-label.js"></script>
+    <script src="https://code.highcharts.com/modules/exporting.js"></script>
+    <script src="https://code.highcharts.com/modules/export-data.js"></script>
+    <link rel='stylesheet' href="{% static 'chart/css/line.css' %}">
+</head>
+<body>
+    
+    <figure class="highcharts-figure">
+    <div id="container"></div>
+    <p class="highcharts-description">
+        This chart shows how symbols and shapes can be used in charts.
+        Highcharts includes several common symbol shapes, such as squares,
+        circles and triangles, but it is also possible to add your own
+        custom symbols. In this chart, custom weather symbols are used on
+        data points to highlight that certain temperatures are warm while
+        others are cold.
+    </p>
+    </figure>
+
+    <script src="{% static 'chart/js/line.js' %}">
+        seoul = '{{seoul}}',
+        london = '{{london}}',
+        console.log(seoul),
+        console.log(london)
+    </script>
+
+</body>
+</html>

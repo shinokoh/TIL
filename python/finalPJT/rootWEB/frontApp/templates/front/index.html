@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <!-- BODY 안에 테이블의 스타일에 대해 명시하는 곳 / 다른 것도 추가가능-->
+    <style>
+        table , th , td {
+            border : 1px solid blue;
+        }
+        th , td{
+            padding : 15px
+        }
+        th {
+            text-align : left;
+        }
+        table{
+            border-spacing : 5px
+        }
+
+        /* 테이블의 아이디만 특정해서 스타일을 주고싶은경우 */
+        #tbl01{
+            
+            width : 50%;
+            background-color : red ;
+        }
+    </style>
+
+</head>
+<!-- body 는 document 라고 부른다.-->
+<body>
+    frontApp 의 index 다
+    <hr/>
+    <!-- 사용자의 input을 정의하는 요소 form-->
+    <form action='../action_page/'>
+        <fieldset>     <!-- fieldset 해당 영역을 박스로 감싸기-->
+            <legend>개인정보</legend><!--박스의(영역)이름 설정-->
+            <!--
+                <label for = "fname" disabled> 는 비활성화
+                <label for = "fname" readonly> 는 비활성화는 아니지만 읽기전용
+            -->
+            <label for = "fname" disabled>First Name : </label><br/>
+            <!-- input하면  name 안에 변수(fname , lname)에 담긴다. required 꼭 채워져야하는구간-->
+            <input type='text' name="fname" required><br/>
+            <label for = "lname">Last Name : </label><br/>
+            <input type='text' name="lname"><p/>
+        </fieldset>
+        <hr/>
+        <!-- 
+            radio only one choice 라서 변수명이 동일해야한다. 
+            name = 의 변수가 같은 항목에 한해서는 그룹지어져야 함
+        -->
+        <input type = "radio" name = "language"><label for = 'html'>HTML</label><br/>
+        <input type = "radio" name = "language"><label for = 'css'>CSS</label><br/>
+        <input type = "radio" name = "language"><label for = 'jsvascript'>JAVASCRIPT</label><br/>
+        <hr/>
+        <!-- 
+            name 이 달라야 한다. value 값도 check 하면 name에 value가 담겨서 넘어간다.
+        -->
+        <input type='checkbox' name = 'vehicle01' value = 'bike'><label for = 'vehicle'>Bike</label><br/>
+        <input type='checkbox' name = 'vehicle02' value = 'car'><label for = 'vehicle'>Car</label><br/>
+        <input type='checkbox' name = 'vehicle03' value = 'boat'><label for = 'vehicle'>Boat</label><br/>
+        <hr/>
+        <!-- 
+            드롭박스 안에 옵션 필요 (세부선택 사항들)
+        -->        
+        <select name = "cars">
+            <option value = 'Audi'>Audi</option>
+            <option value = 'BMW'>BMW</option>
+            <option value = 'Benz'>Benz</option>
+            <option value = 'Volvo'>Volvo</option>
+        </select>
+        <hr/>
+        <textarea name = 'msg'></textarea><br/>
+        <hr/>
+        <!--
+            보여지지는 않지만 value값이 name에 담겨서 서버로 같이 전송된다.
+        서버에서 데이터를 가져왔는데 굳이 보여줄 필요는 없을 때 
+        심어놓고 서버에서 처리하는 용도로 사용한다.
+        -->
+        <input type='hidden' name='hide' value="sy">
+        <hr/>
+
+        <label for = "phone">Enter your phone Number :  </label><br/>
+        <!-- placeholder 입력하기전에 예시 출력/ pattern 해당양식에 맞춰야함-->
+        <input type='tel' name="phone" placeholder="xxx-xxxx-xxxx" pattern = "[0-9]{3}-[0-9]{4}-[0-9]{4}"><br/>
+
+        <!-- 
+            submit 을 쓰려면 form에 action 이 추가되어야 한다.
+            해당 경로로 넘어가게 되니까
+        -->
+        <input type='submit' value = 'SEND'>
+        <hr/>
+
+    </form>
+    <p/>
+    ::Table
+    <!--'width:100%' 현재 브라우저 폭에 맞춰서 table 보여주기-->
+    <table style = 'width:100%' id = 'tbl01'>
+        <tr>
+            <th> First Name</th><th> Last Name</th><th> Age </th>
+        </tr>
+        <tr>
+            <th> 가나 </th><th> 다 </th><th> 28 </th>
+        </tr>
+        <tr>
+            <th> 가나 </th><th> 다 </th><th> 28 </th>
+        </tr>
+
+    </table>
+    <hr/>
+    ::LIST
+    <ul> <!-- 동그라미 목록처리 -->
+        <li>아구찜</li>
+        <li>비빔밥</li>
+        <li>짬뽕</li>
+        <li>짜장면</li>
+    </ul>
+    <ol> <!-- 숫자 목록처리 -->
+        <li>아구찜</li>
+        <li>비빔밥</li>
+        <li>짬뽕</li>
+        <li>짜장면</li>
+    </ol>
+    <hr/>
+    <form>
+        <!-- 
+            datalist id 를 input list의 변수값과 동일시 해야하고
+            input 칸을 눌렀을 때 아래 예시로 보여줄 데이터의 리스트
+        -->
+        <input list = 'browsers'>
+        <datalist id = 'browsers'>
+            <option value='firefox'></option>
+            <option value='chrome'/>
+            <option value='safari'/>
+            <option value='explorer'/>
+            <option value='whale'/>
+        </datalist>
+    </form>
+    <hr/>
+    <!-- ajax 동적페이징 알아보자 -->
+    <ul>
+        <li><a href = '../script_page'>script(ajax) index</li>
+    </ul>
+</body>
+</html>
+
+
+<!--
+<input type="button">
+<input type="checkbox">
+<input type="color">
+<input type="date">
+<input type="datetime-local">
+<input type="email">
+<input type="file">
+<input type="hidden">
+<input type="image">
+<input type="month">
+<input type="number">
+<input type="password">
+<input type="radio">
+<input type="range">
+<input type="reset">
+<input type="search">
+<input type="submit">
+<input type="tel">
+<input type="text">
+<input type="time">
+<input type="url">
+<input type="week">
+-->

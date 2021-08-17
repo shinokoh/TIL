@@ -1,0 +1,28 @@
+ul{
+    list-style-type: none;
+    margin:0;
+    padding:0;
+    /*마진 패딩 적용*/
+    overflow: hidden;
+    background-color: #333;
+}
+
+li{
+    float :left;
+}
+
+li a{
+    display:block;
+    padding: 20px;
+    /*background-color: #dddddd;*/
+    color: white;
+    text-align: center;
+}
+
+li a:hover:not(.active){ /*:not(.active) 클래스가 액티브면 실행하지 말아라 의미*/
+    background-color: #111;
+}
+
+.active{
+    background-color: green;
+}
